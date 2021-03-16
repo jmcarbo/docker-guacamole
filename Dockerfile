@@ -1,5 +1,6 @@
 #FROM library/tomcat:9-jre11
 FROM tomcat:9.0.44-jdk11
+LABEL org.opencontainers.image.source https://github.com/jmcarbo/docker-guacamole
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM

@@ -1,4 +1,4 @@
 #!/usr/bin/with-contenv sh
 
 echo "Starting postgres..."
-s6-setuidgid postgres postgres
+s6-setuidgid postgres /usr/lib/postgresql/11/bin/postgres

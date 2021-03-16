@@ -64,6 +64,17 @@ RUN set -x \
   && cp -R guacamole-auth-jdbc-${GUAC_VER}/postgresql/schema ${GUACAMOLE_HOME}/ \
   && rm -rf guacamole-auth-jdbc-${GUAC_VER} guacamole-auth-jdbc-${GUAC_VER}.tar.gz
 
+# Add additional extensions
+RUN set -xe \
+  && mkdir ${GUACAMOLE_HOME}/extensions-available \
+  && for i in auth-header auth-quickconnect; do \
+    echo "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-${i}-${GUAC_VER}.tar.gz" \
+    && curl -SLO "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-${i}-${GUAC_VER}.tar.gz" \
+    && tar -xzf guacamole-${i}-${GUAC_VER}.tar.gz \
+    && cp guacamole-${i}-${GUAC_VER}/guacamole-${i}-${GUAC_VER}.jar ${GUACAMOLE_HOME}/extensions/ \
+    && rm -rf guacamole-${i}-${GUAC_VER} guacamole-${i}-${GUAC_VER}.tar.gz \
+  ;done
+
 # Add optional extensions
 RUN set -xe \
   && mkdir ${GUACAMOLE_HOME}/extensions-available \
@@ -79,8 +90,6 @@ ENV PATH=/usr/lib/postgresql/${PG_MAJOR}/bin:$PATH
 ENV GUACAMOLE_HOME=/config/guacamole
 
 RUN apt-get update && apt-get install -y postgresql
-#RUN apt-get install -y freerdp2-shadow-x11
-RUN apt-get install -y freerdp2-x11
 WORKDIR /config
 
 COPY root /

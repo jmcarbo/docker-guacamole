@@ -46,7 +46,7 @@ RUN curl -SLO "http://apache.org/dyn/closer.cgi?action=download&filename=guacamo
   && tar -xzf guacamole-server-${GUAC_VER}.tar.gz \
   && cd guacamole-server-${GUAC_VER} \
   && ./configure --enable-allow-freerdp-snapshots \
-  && make -j$(getconf _NPROCESSORS_ONLN) \
+  && CFLAGS="-DFREERDP_SVC_CORE_FREES_WSTREAM=1" make -j$(getconf _NPROCESSORS_ONLN)  \
   && make install \
   && cd .. \
   && rm -rf guacamole-server-${GUAC_VER}.tar.gz guacamole-server-${GUAC_VER} \

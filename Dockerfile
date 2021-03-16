@@ -66,7 +66,6 @@ RUN set -x \
 
 # Add additional extensions
 RUN set -xe \
-  && mkdir ${GUACAMOLE_HOME}/extensions-available \
   && for i in auth-header auth-quickconnect; do \
     echo "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-${i}-${GUAC_VER}.tar.gz" \
     && curl -SLO "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-${i}-${GUAC_VER}.tar.gz" \
